@@ -78,4 +78,47 @@ public class Field {
 	public boolean isOpen() {
 		return open;
 	}
+	
+	public boolean isUndermined() {
+		return undermined;
+	}
+
+	public int getLine() {
+		return line;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+	
+	boolean goalAchieved() {
+		boolean unraveled = !undermined && open;
+		boolean isProtected = undermined && marked;
+		return unraveled || isProtected;
+	}
+	
+	long minesOnNeighborhood() {
+		return neighbors.stream().filter(v -> v.undermined).count();
+	}
+	
+	void restartGame() {
+		open = false;
+		undermined = false;
+		marked = false;
+	}
+	
+	@Override
+	public String toString() {
+		if(marked) {
+			return "x";
+		} else if (open && undermined) {
+			return "*";
+		} else if (open && minesOnNeighborhood() > 0) {
+			return Long.toString(minesOnNeighborhood());
+		} else if (open) {
+			return " "; 
+		} else {
+			return "?";
+		}
+	}
 }
