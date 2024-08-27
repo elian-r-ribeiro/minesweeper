@@ -43,6 +43,10 @@ public class Field {
 			marked = !marked;
 		}
 	}
+	
+	void setOpen(boolean open) {
+		this.open = open;
+	}
 
 	boolean open() {
 
